@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+
+	<!-- <link href="content/style.css" media="screen" rel="stylesheet" type="text/css"> -->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<!-- <script src="webOSjs-0.1.0/webOS.js" charset="utf-8"></script> -->
+	<script src="bundle.js" charset="utf-8"></script>
+	<style>
+		body {
+			background-color: black;
+			height: 100%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			margin-top: 4px;
+			/* -webkit-filter: saturate(110%) */
+			/* -webkit-filter: contrast(110%); */
+
+		}
+	</style>
+	<script>
+
+		// Format code from http://stackoverflow.com/questions/610406/javascript-equivalent-to-printf-string-format
+		if (!String.prototype.format) {
+			String.prototype.format = function () {
+				var args = arguments;
+				return this.replace(/{(\d+)}/g, function (match, number) {
+					return typeof args[number] != 'undefined'
+						? args[number]
+						: match
+						;
+				});
+			};
+		}
+
+		(function ($) {
+			$(document).ready(function () {
+				var channel = location.hash;
+				channel = channel.replace(/\#/g, "");
+
+				getStreamFromChannel(channel).done(function (streams) {
+					var video = document.getElementById('video');
+					var source = document.createElement('source');
+					source.setAttribute('src', streams[0].url);
+					video.appendChild(source);
+					video.play();
+				}, function (e) {
+					console.log("error", e);
+				});
+
+			});
+		})(jQuery);
+	</script>
+
+</head>
+
+<body>
+
+	<video id="video" width="1920" height="1080">
+	</video>
+
+</body>
+
+</html>
