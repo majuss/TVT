@@ -11,7 +11,7 @@ Twitch for any smart TV, primarly for LG's webOS. It bundles PatrickRorth's Twit
 
 ## Systemd service
 
-`nano /etc/systemd/system/twitch@pi.service`
+`sudo nano /etc/systemd/system/twitch@pi.service`
 
 Insert:
 
@@ -31,7 +31,7 @@ ExecStart=/usr/bin/node /home/pi/twitch/server.js
 WantedBy=multi-user.target
 ```
 
-After wards run:
+Afterwards run:
 ```
 sudo systemctl --system daemon-reload
 sudo systemctl enable twitch@pi
