@@ -8,3 +8,31 @@ Twitch for any smart TV, primarly for LG's webOS. It bundles PatrickRorth's Twit
 4. Move the `html` directory to the nginx serving directory
 5. Run `screen` and then run `node server/server.js` to start the serving webserver
 6. Open the browser on your smart TV and browse to the IP of your Pi, enjoy Twitch on the big screen!
+
+## Systemd service
+
+`nano /etc/systemd/system/twitch@pi.service`
+
+Insert:
+
+```
+[Unit]
+Description=Twitch
+After=network-online.target
+
+[Service]
+Type=simple
+User=%i
+Restart=always
+RestartSec=10
+ExecStart=/usr/bin/node /home/pi/twitch/server.js
+
+[Install]
+WantedBy=multi-user.target
+```
+
+After wards run:
+```
+sudo systemctl --system daemon-reload
+sudo systemctl enable twitch@pi
+```
